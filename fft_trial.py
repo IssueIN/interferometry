@@ -8,15 +8,15 @@ from scipy import signal
 import scipy.fftpack as spf
 import scipy.signal as sps
 
-filename = 'white_led_yellow_filter_4'
+filename = 'ML_yellow_2'
 results = rd.read_data3(f'data\\{filename}.txt')
 y = np.array(results[1])
 x = np.array(results[5])
 
 
-conversion = 2* 1.89355e-11 #0.039771e-9 #1.36191e-11 #0.034191e-9 #0.039771
-mask = (-5.6e6 <= x) & (1e6 >= x)
-#(x >= 1.42e7) & (x <= 1.47e7) #(x >= 7.8e6) & (x <= 8.4e6)
+conversion = 2 * 1.89355e-11 #0.039771e-9 #1.36191e-11 #0.034191e-9 #0.039771
+mask = (x>=1e-12)#(x >= 7.8e6) & (x <= 8.4e6)#(-5.6e6 <= x) & (1e6 >= x)
+#(x >= 1.42e7) & (x <= 1.47e7) 
 
 x_masked = x[mask]
 y_masked = y[mask]
@@ -41,7 +41,7 @@ plt.ylabel('y (intensity)')
 plt.title('Original Signal')
 plt.legend()
 
-normalization = 1.4e7#np.abs(yf1).max()
+normalization = 1.4e4#np.abs(yf1).max()
 wl1 = conversion/xf1
 fft_mask = (-1e12 <= wl1)#(0.4e-6 <= wl1) & (wl1 <= 0.8e-6)
 wl1_mask = wl1[fft_mask]
